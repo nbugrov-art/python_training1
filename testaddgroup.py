@@ -17,7 +17,13 @@ class AppDynamicsJob(unittest.TestCase):
     def test_app_dynamics_job(self):
         driver = self.driver
         driver.get("http://localhost/addressbook/")
-        driver.find_element(By.XPATH, "//input[@value='Login']").click()
+        driver.find_element(By.XPATH, "//input[@name='user']").click()
+        driver.find_element(By.XPATH, "//input[@name='user']").clear()
+        driver.find_element(By.XPATH, "//input[@name='user']").send_keys("admin")
+        driver.find_element(By.XPATH, "//input[@name='pass']").click()
+        driver.find_element(By.XPATH, "//input[@name='pass']").clear()
+        driver.find_element(By.XPATH, "//input[@name='pass']").send_keys("secret")
+        driver.find_element(By.XPATH, "//input[@type='submit']").click()
         driver.find_element(By.LINK_TEXT, "add new").click()
         driver.find_element(By.NAME, "firstname").click()
         driver.find_element(By.NAME, "firstname").clear()
