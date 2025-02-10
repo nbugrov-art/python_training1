@@ -16,7 +16,33 @@ class AppDynamicsJob(unittest.TestCase):
 
     def test_app_dynamics_job(self):
         driver = self.driver
-        driver.get("http://localhost/addressbook/")
+        self.open_homepage(driver)
+        self.login(driver)
+        self.open_new_contact_page(driver)
+        self.fill_contact_form(driver)
+        self.submit_new_contact(driver)
+        self.logout(driver)
+
+    def logout(self, driver):
+        # logout
+        driver.find_element(By.LINK_TEXT, "Logout").click()
+
+    def submit_new_contact(self, driver):
+        # submit new contact
+        driver.find_element(By.NAME, "submit").click()
+
+    def fill_contact_form(self, driver):
+        # fill contact firm
+        driver.find_element(By.NAME, "firstname").click()
+        driver.find_element(By.NAME, "firstname").clear()
+        driver.find_element(By.NAME, "firstname").send_keys("234234")
+
+    def open_new_contact_page(self, driver):
+        # open add contact page
+        driver.find_element(By.LINK_TEXT, "add new").click()
+
+    def login(self, driver):
+        # login
         driver.find_element(By.XPATH, "//input[@name='user']").click()
         driver.find_element(By.XPATH, "//input[@name='user']").clear()
         driver.find_element(By.XPATH, "//input[@name='user']").send_keys("admin")
@@ -24,40 +50,10 @@ class AppDynamicsJob(unittest.TestCase):
         driver.find_element(By.XPATH, "//input[@name='pass']").clear()
         driver.find_element(By.XPATH, "//input[@name='pass']").send_keys("secret")
         driver.find_element(By.XPATH, "//input[@type='submit']").click()
-        driver.find_element(By.LINK_TEXT, "add new").click()
-        driver.find_element(By.NAME, "firstname").click()
-        driver.find_element(By.NAME, "firstname").clear()
-        driver.find_element(By.NAME, "firstname").send_keys("234234")
-        driver.find_element(By.NAME, "submit").click()
-        driver.find_element(By.LINK_TEXT, "Logout").click()
-        driver.find_element(By.NAME, "user").clear()
-        driver.find_element(By.NAME, "user").send_keys("admin")
 
-    def is_element_present(self, how, what):
-        try:
-            self.driver.find_element(by=how, value=what)
-        except NoSuchElementException:
-            return False
-        return True
-
-    def is_alert_present(self):
-        try:
-            self.driver.switch_to.alert()
-        except NoAlertPresentException:
-            return False
-        return True
-
-    def close_alert_and_get_its_text(self):
-        try:
-            alert = self.driver.switch_to.alert
-            alert_text = alert.text
-            if self.accept_next_alert:
-                alert.accept()
-            else:
-                alert.dismiss()
-            return alert_text
-        finally:
-            self.accept_next_alert = True
+    def open_homepage(self, driver):
+        # Open home page
+        driver.get("http://localhost/addressbook/")
 
     def tearDown(self):
         self.driver.quit()
