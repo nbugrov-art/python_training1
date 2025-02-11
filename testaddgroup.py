@@ -13,7 +13,6 @@ class AppDynamicsJob(unittest.TestCase):
 
     def test_app_dynamics_job(self):
         driver = self.driver
-        self.open_homepage(driver)
         self.login(driver, "admin", "secret")
         self.open_new_contact_page(driver)
         self.fill_contact_form(driver, Group(name="12134"))
@@ -22,7 +21,6 @@ class AppDynamicsJob(unittest.TestCase):
 
     def test_2app_dynamics_job(self):
         driver = self.driver
-        self.open_homepage(driver)
         self.login(driver, "admin", "secret")
         self.open_new_contact_page(driver)
         self.fill_contact_form(driver, Group(name=""))
@@ -49,6 +47,7 @@ class AppDynamicsJob(unittest.TestCase):
 
     def login(self, driver, username, password):
         # login
+        self.open_homepage(driver)
         driver.find_element(By.XPATH, "//input[@name='user']").click()
         driver.find_element(By.XPATH, "//input[@name='user']").clear()
         driver.find_element(By.XPATH, "//input[@name='user']").send_keys(username)
